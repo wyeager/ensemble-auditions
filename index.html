@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>UMD Ensemble Auditions</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="https://www.umd.edu/sites/umd.edu/files/favicon.ico" type="image/vnd.microsoft.icon" />
+
+	<!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+<body>
+  <div id="loader"></div>
+  <div id="allContent">
+
+  <ul class="nav nav-tabs justify-content-end">
+    <li class="nav-item topAdminNav">
+      <a class="nav-link" onclick="showPage(['admin'], ['home'])">Home</a>
+    </li>
+    <li class="nav-item topAdminNav">
+      <a class="nav-link" onclick="showPage(['home'], ['admin'])">Admin</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" onclick="logOut()">Logout</a>
+    </li>
+  </ul>
+
+	<div id="home">
+	<div class="jumbotron">
+	  <div class="container">
+	    <h2 id="homeTitle" class="display-4">UMD School of Music Ensemble Auditions</h2>
+	    <p id="homeMessage" class="text"></p>
+      <h5><a href="https://umd.app.box.com/s/lz36wzdq3a318heszlmie5op60p5n386" target="_blank">Schedule</a></h5>
+	  </div>
+	</div>
+
+	<div class="container">
+
+	<div class="row">
+    <!-- Sign Up Form Column -->
+    <div class="col-sm-6">
+      <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+          <h3>Sign-up</h3>
+          <h5 id="signUpInstrument"></h5>
+    			<ul id="nav" class="nav nav-tabs nav-fill">
+    			  <li class="nav-item home-nav">
+    			    <a id="register_nav" class="nav-link active" 
+                 onclick="showPage(['login'], ['register'], ['login_nav'], ['register_nav'])">Register</a>
+    			  </li>
+    			  <li class="nav-item home-nav">
+    			    <a id="login_nav" class="nav-link"
+                 onclick="showPage(['register'], ['login'], ['register_nav'], ['login_nav'])">Login</a>
+    			  </li>
+    			</ul>
+        </div>
+
+        <!-- ******* Sign Up Panel Body ******* -->
+        <div class="card-body">
+          <!-- ***** Create New User ***** -->
+          <form id="register" class="form-horizontal" >
+            <div class="form-group">
+              <label for="firstname">First name:</label>
+              <input id="firstname" class="form-control my-form" type="text" name="firstname" required>
+
+              <!-- Lastname input -->
+              <label for="lastname">Last name:</label>
+              <input id="lastname" class="form-control my-form" type="text" name="lastname" required>
+
+              <!-- New User Email Input -->
+              <label for="email">Email:</label>
+              <input id="reg_email" class="form-control my-form" type="email" name="email">
+
+              <label for="instrument">Instrument:</label>
+              <select id="inst" class="form-control my-form" name="">
+                <option disabled selected value> -- select an option -- </option>
+              </select>
+
+              <!-- New User Password Input -->
+              <label for="password">Password:</label>
+              <input id="reg_password" class="form-control my-form" type="password" name="password">
+
+              <!-- New User Confirm Password Input -->
+              <label for="confirmPassword">Confirm Password:</label>
+              <input id="reg_confirmPassword" class="form-control my-form" type="password" name="confirmPassword">
+
+              <br>
+              <button type="button" class="btn btn-primary btn-block" onclick="createNewUser()">Submit</button>
+
+            </div>
+          </form>
+
+          <!-- ******* Login User ******* -->
+          <form id="login" class="form-horizontal">
+            <div class="form-group">
+
+              <!-- Login User Email Input -->
+              <label for="email" class="my-form">Email:</label>
+              <input id="login_email" class="my-form form-control" type="email" name="email" value="">
+
+              <!-- Login User Password Input -->
+              <label for="password" class="my-form">Password:</label>
+              <input id="login_password" class="my-form form-control" type="password" name="password" value="">
+
+              <br>
+              <button type="button" class="btn btn-primary btn-block" onclick="loginUser()">Submit</button>
+
+              <a href="#" onclick="resetPassword()">Forgot Password?</a>
+            </div>
+          </form>
+
+          <!-- ******* Sign Up Form ******* -->
+          <form id="signUp" class="form-horizontal" >
+
+            <!-- Tables -->
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody id="signUpTimes">
+
+              </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary btn-block" name="submit" onclick="addAudition()">Submit</button>
+          </form>
+
+          <div id="afterSignUp" class="text">
+            <p id="afterSignUpMessage"></p>
+            <p><b>First name: </b><span id="firstnameAfter"></span></p>
+            <p><b>Last name: </b><span id="lastnameAfter"></span></p>
+            <p><b>Instrument: </b><span id="instrumentAfter"></span></p>
+            <p><b>Email: </b><span id="emailAfter"></span></p>
+            <p><b>Audition time: </b><span id="timeAfter"></span></p>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End col 1 - Sign Up -->
+
+    <!-- Music Column -->
+    <div class="col-sm-6">
+      <div class="card music">
+
+        <!-- Excerpt Packet Headers -->
+        <div class="card-header">
+          <h3>Music</h3>
+          <p class="text">Required audition music</p>
+        </div>
+
+        <!-- Excerpt Packet Links -->
+        <div class="card-body">
+          <table class="table table-striped">
+            <tbody id="packets">
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div> <!-- End col 2 - Music -->
+
+  </div> <!-- End row (the grouping of the Music and Sign Up columns) -->
+  </div> <!-- End container -->
+	</div> <!-- End home -->
+
+	<div id="admin">
+    <div id="adminJumbo" class="jumbotron">
+      <div class="container">
+        <h1 id="adminTitle" class="display-4">Admin Page</h1>
+      </div>
+    </div>
+    <ul class="nav nav-tabs flex-column flex-sm-row">
+      <li class="flex-sm text-sm-center nav-item">
+        <a id="overview_nav" class="nav-link active"
+           onclick="showPage(['edit_content', 'conf_auditions', 'other'], ['overview'], 
+                             ['edit_nav', 'conf_nav', 'other_nav'], ['overview_nav'])">Overview</a>
+      </li>
+      <li class="flex-sm text-sm-center nav-item">
+        <a id="edit_nav" class="nav-link" 
+           onclick="editContent()">Edit Content</a>
+      </li>
+      <li class="flex-sm text-sm-center nav-item">
+        <a id="conf_nav" class="nav-link" 
+           onclick="configureNewAudition()">Configure New Auditions</a>
+      </li>
+    </ul>
+    <div class="container">
+      <div id="overview">
+        <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+          <h4>Overview</h4>
+        </div>
+          <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <div id="instrumentsListOverviewDiv">
+                <table class="table table-striped">
+                  <tbody id="instrumentsListOverview">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <form class="form-horizontal">
+                <div id="instrumentDrilldownOverview">
+                  <div class="card">
+                    <div class="card-header text-center">
+                      <h4 id="dateTimeHeaderOverview"></h4>
+                      <p id="dateTimeMessageOverview">Select an instrument on the left to see its audition dates and times.</p>
+                    </div>
+                    <div class="card-body">
+                      <div id="overviewInnerCard">
+                        <div class="card">
+                          <!-- Header -->
+                          <div class="card-header">
+                            <ul id="overviewDateNav" class="nav nav-tabs nav-fill">
+
+                            </ul>
+                          </div>
+                          <!-- Card Body -->
+                          <div class="card-body">
+                            <table class="table table-striped">
+                              <tbody id="dateTimeCardOver">
+                                
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div> <!-- Row -->
+          </div> <!-- Card body -->
+        </div>
+      </div>
+
+      <div id="edit_content">
+        <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+          <h4>Edit Content</h4>
+        </div>
+          <div class="card-body">
+            <form id="content_form" class="form-horizontal">
+              <div class="form-group">
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Home Title</span>
+                  </div>
+                  <textarea id="homeTitleEdit" class="form-control"></textarea>
+                </div>
+
+                <br>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Home Message</span>
+                  </div>
+                  <textarea id="homeMessageEdit" class="form-control"></textarea>
+                </div>
+
+                <br>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">After Sign-Up Message</span>
+                  </div>
+                  <textarea id="afterSignUpMessageEdit" class="form-control"></textarea>
+                </div>
+
+                <br>
+                <label for="instrument">Select an instrument to add/update its packet link:</label>
+                <select id="packetLinksContent" class="form-control my-form" name="">
+                  <option disabled selected value> -- select an option -- </option>
+                  
+                </select>
+
+                <label for="packetLink" class="my-form">Packet Link:</label>
+                <input id="packetLink" class="my-form form-control" placeholder="First choose an instrument above" type="textarea" name="packetLink" value="">
+
+                <br>
+                <button type="button" class="btn btn-primary" onclick="updateContent()">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="conf_auditions">
+        <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+          <h4>Configure New Auditions</h4>
+        </div>
+          <div class="card-body">
+            <div class="row">
+            <div class="col-sm-3">
+              <table class="table table-striped">
+                <tbody id="instrumentsList">
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-9">
+            <form id="conf_form" class="form-horizontal">
+              <div class="form-group">
+                <div id="beginButton">
+                    <p>Use this form to set up a new year's round of auditions. If you instead want to make edits to a current year's auditions then go to the Overview tab, select an instrument and click the Edit button.</p>
+
+                  <p><b>Please note this will:</b></p>
+                  <ul>
+                    <li>Reset the user database</li>
+                    <li>Generate new Google Sheets (while preserving the old ones)</li>
+                    <li>Reset the list of audition packet links</li>
+                  </ul>
+
+                  <button type="button" class="btn btn-primary btn-block"
+                          onclick="showPage(['beginButton'], ['conf_auditions_flow1'])">Begin</button>
+                </div>
+
+                <div id="conf_auditions_flow1">
+                  <label for="currYearConf" class="my-form">Set Current Year:</label>
+                  <input id="currYearConf" class="my-form form-control" type="textarea" name="currYearConf" value="">
+
+                  <div id="instCheckboxes">
+                    <label for="instrument">Instruments:</label><br>
+                    <input type="checkbox" name="instrument" value="Flute" checked> Flute<br>
+                    <input type="checkbox" name="instrument" value="Oboe" checked> Oboe<br>
+                    <input type="checkbox" name="instrument" value="Clarinet" checked> Clarinet<br>
+                    <input type="checkbox" name="instrument" value="Bassoon" checked> Bassoon<br>
+                    <input type="checkbox" name="instrument" value="Saxophone" checked> Saxophone<br>
+                    <input type="checkbox" name="instrument" value="French Horn" checked> French Horn<br>
+                    <input type="checkbox" name="instrument" value="Trumpet" checked> Trumpet<br>
+                    <input type="checkbox" name="instrument" value="Tenor Trombone" checked> Tenor Trombone<br>
+                    <input type="checkbox" name="instrument" value="Bass Trombone" checked> Bass Trombone<br>
+                    <input type="checkbox" name="instrument" value="Tuba" checked> Tuba<br>
+                    <input type="checkbox" name="instrument" value="Percussion" checked> Percussion<br>
+                    <input type="checkbox" name="instrument" value="Violin" checked> Violin<br>
+                    <input type="checkbox" name="instrument" value="Viola" checked> Viola<br>
+                    <input type="checkbox" name="instrument" value="Cello" checked> Cello<br>
+                    <input type="checkbox" name="instrument" value="Bass" checked> Bass<br>
+                  </div>
+                  <br>
+
+                  <label for="addInst" class="my-form">Add another instrument:</label>
+                  <div class="input-group">
+                     <input id="addInst" class="my-form form-control" 
+                            type="text" name="addInst" value="">
+                     <span class="input-group-btn">
+                        <button id="addInstBtn" class="btn btn-primary" type="button" onclick="addInstrument()">Add</button>
+                     </span>
+                  </div>
+
+                  <br>
+                  <p>Warning! Clicking next will change the website to the specified year. Only do so if you are done with the past year's auditions.</p>
+                  <button type="button" class="btn btn-primary" 
+                          onclick="showPage(['conf_auditions_flow1'], ['beginButton'])">Back</button>
+                  <button type="button" class="btn btn-primary" 
+                          onclick="configureDatesAndTimes()">Next</button>
+                </div>
+
+                <div id="conf_auditions_flow2">
+                  <div class="card">
+                    <div class="card-header text-center">
+                      <h4 id="dateTimeHeader"></h4>
+                      <p id="dateTimeMessage">Select an instrument on the left to set its audition date and time.</p>
+                    </div>
+                    <div class="card-body">
+                      <div id="dateTimeInput">
+                        <label for="confNumberDays">Number of Days (4 per instrument max):</label>
+                        <input id="confNumberDays" type="number" class="form-control" name="confNumberDays">
+
+                        <br>
+                        <button type="button" class="btn btn-primary" 
+                          onclick="applyNumDays()">Generate Days</button>
+
+                        <br><br>
+                        <div class="card" id="dateTimeCard">
+                          <!-- Header -->
+                          <div class="card-header">
+                            <h4>Enter Date and Time:</h4>
+                            <ul id="confDateTimeNav" class="nav nav-tabs nav-fill">
+
+                            </ul>
+                          </div>
+                          <div class="card-body">
+                            <label for="confDate">Date:</label>
+                            <input id="confDate" type="text" class="form-control" name="confDate">
+
+                            <div id="confTimes">
+                              <label for="confStartTime">Start Time:</label>
+                              <input id="confStartTime" type="time" class="form-control" name="confStartTime">
+
+                              <label for="confNumAuditions">Number of auditions:</label>
+                              <input id="confNumAuditions" type="number" class="form-control" name="confNumAuditions">
+
+                              <label for="confTimeInterval">Time interval:</label>
+                              <input id="confTimeInterval" type="number" class="form-control" name="confTimeInterval">
+
+                              <br>
+                              <button type="button" class="btn btn-primary" 
+                                      onclick="generateTimes()">Generate Times</button>
+
+                              <br><br>
+                              <table class="table table-striped">
+                                <tbody id="generatedTimes">
+                                  
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <button type="button" class="btn btn-primary btn-block" 
+                          onclick="submitNewAuditions()">Submit All Dates/Times</button>
+                  <br><br><br><br><br><br><br>
+                  <button type="button" class="btn btn-danger float-right" 
+                          onclick="backToConf1()">Reset All</button><br><br>
+                  <p style="float: right">Careful with this reset button. It'll reset all the instruments, dates and times you've configured so far.</p>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div> <!-- Row -->
+          </div> <!-- Card body -->
+        </div> <!-- Card -->
+      </div> <!-- Conf auditions -->
+    </div>
+	</div>
+  </div>
+
+  <!-- This goes at bottom of html before any other script tags -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "",
+	    authDomain: "",
+	    databaseURL: "",
+	    projectId: "",
+	    storageBucket: "",
+	    messagingSenderId: ""
+	  };
+	  firebase.initializeApp(config);
+	</script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/new.js"></script>
+  <script src="js/over.js"></script>
+  <script src="js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+#allContent,
+#admin,
+#afterSignUp,
+.topAdminNav,
+#conf_auditions_flow1,
+#conf_auditions_flow2,
+#dateTimeInput,
+#confTimes,
+#dateTimeCard,
+#login,
+#showAudition,
+#signUp {
+  display: none;
+}
+
+.nav {
+  background-color: #ededed;
+}
+
+@media (max-width: 576px) {
+  .music {
+    margin-top: 15px;
+  }
+}
+
+.music {
+  margin-bottom: 60px;
+}
+
+#edit_content {
+  margin-top: 30px;
+  display: none;
+}
+
+#adminJumbo {
+  margin-bottom: 0px !important;
+}
+
+.jumbotron {
+  padding-top: 0;
+  padding-right: 2rem;
+  padding-bottom: .5rem;
+  padding-left: 2rem;
+}
+
+#overview {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+#conf_auditions {
+  margin-top: 30px;
+  display: none;
+}
+
+#addInstBtn {
+  margin-left: 5px;
+}
+
+#conf_form {
+  margin: 10px;
+}
+
+.my-form {
+  margin-bottom: 5px
+}
+
+#packetLinkBtn {
+  margin-left: 5px;
+}
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
